@@ -1,5 +1,18 @@
 var http = require('http');
 var express = require('express');
+var MongoClient = require('mongodb');
+
+// Connect DB
+MongoClient.connect('mongodb://umongo:mongodb1!@ds161493.mlab.com:61493/simplemongodb', function(err, db){
+	if (err){
+		console.log(err);
+		throw err; 
+	}
+	else 
+	{
+		console.log("Connection complete");
+	}
+});
 
 // Set up the app. 
 var app = express();
