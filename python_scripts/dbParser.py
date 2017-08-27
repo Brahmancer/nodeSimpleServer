@@ -1,13 +1,14 @@
 # File: dbParser.py 
 # Author: dmiller4991@gmail.com
 # Description: File parser that will parse a given file name from arguments and spit out a username and password. 
- 
+
+# Imports 
 import sys 
+import json 
 
 # variables
 password = None
 username = None
-dbDict = {}
 
 # check platform. 
 if sys.platform == "win32":
@@ -39,21 +40,15 @@ for line in dbfile:
 	if index > -1: 
 		username = line[len("user: "):]
 		username = username.rstrip("\n")
-		# print(username)
+		print("username: " + str(username))
 	
 	index = line.find("pw: ")
 	if index > -1: 
 		password = line[len("pw: "):]
 		password = password.rstrip("\n")
-		# print(password)
+		print("password: " + str(password))
 		
 
 if username is None or password is None:
 		print ("Error: no username or password found in file.")
-else: 
-	dbDict["username"] = username
-	dbDict["password"] = password
-	print("dbDict: " + str(dbDict))
-	
-# TODO: find a way to return the dictionary as data to js file
 
