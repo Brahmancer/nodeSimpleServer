@@ -1,9 +1,23 @@
+/**
+* File: simpleserver.js
+* Author: dmiller4991@gmail.com
+* 
+* Description: 
+*	A "simple" server application written in javascript using NodeJS.
+*	Express will handle the actual application of the server. 
+*   MongoDB will act as the DB. 
+*   Any additions added to this will be defined in as different javascript files. 
+*/
+
 var http = require('http');
 var express = require('express');
 var MongoClient = require('mongodb');
 
+// TODO: Set up module exports needed for the server. 
+
 // Connect DB
-MongoClient.connect('mongodb://umongo:mongodb1!@ds161493.mlab.com:61493/simplemongodb', function(err, db){
+// TODO: Find a way to dynamically get password from file. Maybe a different script? 
+MongoClient.connect('mongodb://umongo:<insertpasshere>@ds161493.mlab.com:61493/simplemongodb', function(err, db){
 	if (err){
 		console.log(err);
 		throw err; 
@@ -21,6 +35,7 @@ var app = express();
 app.set('port', 10000);
 
 // Basic Hello World response to requests
+// TODO: Add responses to requests. Essentially set up the protocol for the client application. 
 app.get('/', function(req, res){
 	res.send('Hello World!');
 });
