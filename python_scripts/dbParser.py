@@ -13,11 +13,12 @@ username = None
 # check platform. 
 if sys.platform == "win32":
 	print("Platform is Windows")
-elif sys.platform == "Linux":
-	print("Platform is Linux")
+elif sys.platform == "linux2":
+	print("Platform is Debian")
 else: 
+	# TODO: at some point, try and find other platforms. 
 	print("Platform is " + str(sys.platform))
-	exit()
+	# exit()
 
 # Check comamand line arguments.
 if (len(sys.argv) < 2):
