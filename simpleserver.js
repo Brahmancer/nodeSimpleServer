@@ -9,9 +9,14 @@
 *   Any additions added to this will be defined in as different javascript files. 
 */
 
+// declare requirements here. 
 var http = require('http');
 var express = require('express');
 var MongoClient = require('mongodb');
+
+// variables
+var dbuser; // username of a user for the MongoDB. 
+var dbpass; // password for the dbuser
 
 // TODO: Set up module exports needed for the server. 
 
