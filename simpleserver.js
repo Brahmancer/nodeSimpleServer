@@ -12,23 +12,37 @@
 // declare requirements here.
 var http = require('http');
 var express = require('express');
-var MongoClient = require('mongodb');
+var MongoClient = require('mongodb').MongoClient;
 var PythonShell = require('python-shell');
+var bodyParser = require('body-parser');
+
+// Import Classes
 var dbMetaData = require('./dist/DBMetaData.js')
+var dbConnection = require('./dist/dbconnection.js')
 
 // variables
 var dbPythonOptions = {
 	mode: 'text',
 	args: ['dbfile.txt']
 };
+
 var dbData = new dbMetaData('', ''); // Container of Mongo Metadata;
 
 // shell to run the python script to grab MongoDB credentials.
 var pyshell = new PythonShell('python/dbParser.py', dbPythonOptions);
 
+// console.log("mongoversion: " + MongoClient.version);
+
 // retrieve any data run by the python script.
 pyshell.on('message', function(message)
 {
+
+	if (message.indexOf("url: ") > -1)
+	{
+		var index = message.indexOf(": ")
+		var dburl = message.substring(index + 2)
+		dbData.setUrl(dburl)
+	}
 
 	if (message.indexOf("username: ") > -1)
 	{
@@ -64,6 +78,10 @@ var app = express();
 // Use a port of 10000
 app.set('port', 10000);
 
+// Use the body parser in the application
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Basic Hello World response to requests
 // TODO: Add responses to requests. Essentially set up the protocol for the client application.
 app.get('/', function(req, res){
@@ -72,8 +90,21 @@ app.get('/', function(req, res){
 
 // Endpoint: Create model
 app.post('/data', function(req, res){
-	var result = dbData.getObj(req.id);
-	res.json(result);
+
+	var connection = new dbConnection(dbData);
+
+	connection.addItemToDB(req.body, function(error=null){
+			if(error != null)
+			{
+				console.error("Error occured with adding an Item to DB: " + error);
+				res.status(500).send();
+			}
+			else
+			{
+				console.log("Added item into DB");
+				res.status(200).send();
+			}
+	});
 });
 
 // Create the http server and listen to the app's port.

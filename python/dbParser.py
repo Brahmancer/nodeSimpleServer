@@ -3,7 +3,7 @@
 # Description: File parser that will parse a given file name from arguments and spit out a username and password.
 
 # Imports
-import sys 
+import sys
 
 # variables
 password = None
@@ -35,7 +35,13 @@ dbfile = open(filename, 'r')
 # find all relevant information and put in a table
 for line in dbfile:
 
-	# use an index to parse lines from input file.
+	# use an index to parse lines from input file
+	index = line.find("url: ")
+	if index > -1:
+		url = line[len("url: "):]
+		url = url.rstrip("\n")
+		print("url: " +  str(url))
+
 	index = line.find("user: ")
 	if index > -1:
 		username = line[len("user: "):]

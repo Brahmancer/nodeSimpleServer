@@ -8,14 +8,22 @@ import requests
 # Test Class
 class TestBasicCRUD:
 
+    testData = {"id ": 0, "name" : "Boaty McBoatFace"}
+
     def testPostObj(self):
         # local varaibles;
-        pass
+        response = requests.post("http://localhost:10000/data", json = self.testData)
+        if response.status_code is not 200:
+            print("Test failed: response is not what was expected. "
+            + "Expected 200, got " + str(response.status_code))
+            exit()
+        else:
+            print("Test passed!")
 
     def testGetObj(self):
 
         # Make resquest
-        response = requests.post("http://localhost:10000/data", json= {"id": "0"})
+        response = requests.get("http://localhost:10000/data", json= {"id": "0"})
         print("Response json data:")
         print(response.json())
 
@@ -34,6 +42,6 @@ if __name__ == '__main__':
 
     # run tests.
     test.testPostObj()
-    test.testGetObj()
+    # test.testGetObj()
     test.testPutObj()
     test.testDeleteObj()

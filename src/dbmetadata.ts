@@ -12,6 +12,7 @@ class DBMetaData
 {
     username : string;
     password : string;
+    address : string;
 
     constructor(private name:string, private pass: string)
     {
@@ -39,12 +40,16 @@ class DBMetaData
         return this.password;
     }
 
-    getObj(id)
+    setUrl(url: string)
     {
-        return {
-            message: "Hello world!"
-        };
+        this.address = url
     }
+
+    getUrl()
+    {
+        return this.address;
+    }
+
 }
 
 // Export the Class so it can be used by other files.
