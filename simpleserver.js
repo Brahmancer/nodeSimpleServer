@@ -27,18 +27,20 @@ var dbData = new dbMetaData('', ''); // Container of Mongo Metadata;
 var pyshell = new PythonShell('python/dbParser.py', dbPythonOptions);
 
 // retrieve any data run by the python script.
-pyshell.on('message', function(message){
+pyshell.on('message', function(message)
+{
+
 	if (message.indexOf("username: ") > -1)
 	{
-		index = message.indexOf(": ");
-		dbuser = message.substring(index + 2);
+		var index = message.indexOf(": ");
+		var dbuser = message.substring(index + 2);
 		dbData.setUsername(dbuser);
 		// console.log("dbuser: " + dbuser);
 	}
 	else if (message.indexOf("password: ") > -1)
 	{
-		index = message.indexOf(": ");
-		dbpass = message.substring(index + 2);
+		var index = message.indexOf(": ");
+		var dbPass = message.substring(index + 2);
 		dbData.setPassword(dbPass);
 		// console.log("dbpass: " + dbpass);
 	}
@@ -66,6 +68,12 @@ app.set('port', 10000);
 // TODO: Add responses to requests. Essentially set up the protocol for the client application.
 app.get('/', function(req, res){
 	res.send('Hello World!');
+});
+
+// Endpoint: Create model
+app.post('/data', function(req, res){
+	var result = dbData.getObj(req.id);
+	res.json(result);
 });
 
 // Create the http server and listen to the app's port.

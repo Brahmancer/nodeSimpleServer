@@ -38,7 +38,14 @@ class DBMetaData
     {
         return this.password;
     }
+
+    getObj(id)
+    {
+        return {
+            message: "Hello world!"
+        };
+    }
 }
 
-// Export the Class so it can be used by other files. 
+// Export the Class so it can be used by other files.
 export = DBMetaData;
